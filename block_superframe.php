@@ -48,20 +48,22 @@ to register your plugin in the plugins database
  * Class superframe minimal required block class.
  *
  */
-
-class block_superframe extends block_base {
+class block_superframe extends block_base
+{
     /**
      * Initialize our block with a language string.
      */
-    function init() {
+    function init()
+    {
         $this->title = get_string('pluginname', 'block_superframe');
     }
 
     /**
      * Add some text content to our block.
      */
-    function get_content() {
-        global $USER;
+    function get_content()
+    {
+        global $USER, $CFG;
 
         // Do we have any content?
         if ($this->content !== null) {
@@ -76,26 +78,31 @@ class block_superframe extends block_base {
         // OK let's add some content.
         $this->content = new stdClass();
         $this->content->footer = '';
-        $this->content->text = get_string('welcomeuser', 'block_superframe',
-                $USER);
+        $this->content->text = get_string('welcomeuser', 'block_superframe', $USER) . '<br />' . get_string('message', 'block_superframe', $USER);
+        $this->content->text .= '<br /><a href="' . $CFG->wwwroot . '/blocks/superframe/view.php">' .
+            get_string('viewlink', 'block_superframe') . '</a>';
 
         return $this->content;
     }
+
     /**
      * This is a list of places where the block may or
      * may not be added.
      */
-    public function applicable_formats() {
+    public function applicable_formats()
+    {
         return array('all' => false,
-                     'site' => true,
-                     'site-index' => true,
-                     'course-view' => true,
-                     'my' => true);
+            'site' => true,
+            'site-index' => true,
+            'course-view' => true,
+            'my' => true);
     }
+
     /**
      * Allow multiple instances of the block.
      */
-    function instance_allow_multiple() {
+    function instance_allow_multiple()
+    {
         return true;
     }
 
