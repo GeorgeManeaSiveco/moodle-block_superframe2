@@ -1,5 +1,4 @@
 <?php
-
 // This file is part of Moodle - http://moodle.org/
 //
 // Moodle is free software: you can redistribute it and/or modify
@@ -50,3 +49,11 @@ $string['pagelayout_details'] = 'Select a preferred page layout';
 // Capability strings.
 $string['superframe:addinstance'] = 'Add a new Super frame block';
 $string['superframe:myaddinstance'] = 'Add a new Super frame block to my moodle';
+$string['superframe:seeviewpage'] = 'View block page';
+
+// Edit form strings.
+$string['size'] = 'Select a size for your iframe';
+$string['custom'] = 'Custom';
+$string['small'] = 'Small';
+$string['medium'] = 'Medium';
+$string['large'] = 'Large';

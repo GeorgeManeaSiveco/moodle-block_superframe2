@@ -48,19 +48,19 @@ to register your plugin in the plugins database
  * Class superframe minimal required block class.
  *
  */
-
-class block_superframe extends block_base {
+class block_superframe extends block_base
+{
     /**
      * Initialize our block with a language string.
      */
-    function init() {
+    public function init() {
         $this->title = get_string('pluginname', 'block_superframe');
     }
 
     /**
      * Add some text content to our block.
      */
-    function get_content() {
+    public function get_content() {
         global $USER, $CFG;
 
         // Do we have any content?
@@ -77,33 +77,44 @@ class block_superframe extends block_base {
         $this->content = new stdClass();
         $this->content->footer = '';
         $this->content->text = get_string('welcomeuser', 'block_superframe',
-                $USER);
-        $this->content->text .= '<br /><a href="' . $CFG->wwwroot . '/blocks/superframe/view.php">' .
-                get_string('viewlink', 'block_superframe') . '</a>';
+            $USER);
+
+        // Check user permissions.
+        $usercontext = context_user::instance($USER->id);
+        if (has_capability('block/superframe:seeviewpage', $usercontext)) {
+            // Add the block id to the moodle url.
+            $blockid = $this->instance->id;
+            $url = new moodle_url('/blocks/superframe/view.php', ['blockid' => $blockid]);
+            $this->content->text .= '<p>' . html_writer::link($url,
+                    get_string('viewlink', 'block_superframe')) . '</p>';
+        }
 
         return $this->content;
     }
+
     /**
      * This is a list of places where the block may or
      * may not be added.
      */
     public function applicable_formats() {
         return array('all' => false,
-                     'site' => true,
-                     'site-index' => true,
-                     'course-view' => true,
-                     'my' => true);
+            'site' => true,
+            'site-index' => true,
+            'course-view' => true,
+            'my' => true);
     }
+
     /**
      * Allow multiple instances of the block.
      */
-    function instance_allow_multiple() {
+    public function instance_allow_multiple() {
         return true;
     }
+
     /**
      * Allow block configuration.
      */
-    function has_config() {
+    public function has_config() {
         return true;
     }
 }
