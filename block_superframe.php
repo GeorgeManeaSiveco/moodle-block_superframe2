@@ -53,17 +53,18 @@ class block_superframe extends block_base
     /**
      * Initialize our block with a language string.
      */
-    public function init() {
+    public function init()
+    {
         $this->title = get_string('pluginname', 'block_superframe');
     }
 
     /**
      * Add some text content to our block.
      */
-    public function get_content() {
-        global $USER, $CFG;
+    public function get_content()
+    {
+        global $PAGE;
 
-        // Do we have any content?
         if ($this->content !== null) {
             return $this->content;
         }
@@ -73,21 +74,10 @@ class block_superframe extends block_base
             return $this->content;
         }
 
-        // OK let's add some content.
         $this->content = new stdClass();
         $this->content->footer = '';
-        $this->content->text = get_string('welcomeuser', 'block_superframe',
-            $USER);
-
-        // Check user permissions.
-        $usercontext = context_user::instance($USER->id);
-        if (has_capability('block/superframe:seeviewpage', $usercontext)) {
-            // Add the block id to the moodle url.
-            $blockid = $this->instance->id;
-            $url = new moodle_url('/blocks/superframe/view.php', ['blockid' => $blockid]);
-            $this->content->text .= '<p>' . html_writer::link($url,
-                    get_string('viewlink', 'block_superframe')) . '</p>';
-        }
+        $renderer = $PAGE->get_renderer('block_superframe');
+        $this->content->text = $renderer->fetch_block_content($this->instance->id);
 
         return $this->content;
     }
@@ -96,7 +86,8 @@ class block_superframe extends block_base
      * This is a list of places where the block may or
      * may not be added.
      */
-    public function applicable_formats() {
+    public function applicable_formats()
+    {
         return array('all' => false,
             'site' => true,
             'site-index' => true,
@@ -107,14 +98,16 @@ class block_superframe extends block_base
     /**
      * Allow multiple instances of the block.
      */
-    public function instance_allow_multiple() {
+    public function instance_allow_multiple()
+    {
         return true;
     }
 
     /**
      * Allow block configuration.
      */
-    public function has_config() {
+    public function has_config()
+    {
         return true;
     }
 }

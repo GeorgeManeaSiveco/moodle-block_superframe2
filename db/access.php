@@ -62,8 +62,8 @@ $capabilities = array(
         'archetypes' => array(
             'editingteacher' => CAP_ALLOW,
             'manager' => CAP_ALLOW,
-            'student' => CAP_PREVENT,
-            'guest' => CAP_PREVENT
+            'student' => CAP_ALLOW,
+            'guest' => CAP_ALLOW
         )
     ),
 );

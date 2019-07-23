@@ -22,8 +22,7 @@
  * Modified for use in MoodleBites for Developers Level 1 by Richard Jones & Justin Hunt
  * @license   http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
-require('../../config.php');
-require_login();
+
 
 class block_superframe_edit_form extends block_edit_form
 {
