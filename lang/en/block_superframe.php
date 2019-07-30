@@ -57,3 +57,10 @@ $string['custom'] = 'Custom';
 $string['small'] = 'Small';
 $string['medium'] = 'Medium';
 $string['large'] = 'Large';
+
+$string['poplink'] = 'Popup Url';
+$string['tablecaption'] = 'Block instance by Course';
+$string['blockid'] = 'Block ID';
+$string['blockname'] = 'Block Name';
+$string['course'] = 'Course shortname';
+$string['catname'] = 'Category';

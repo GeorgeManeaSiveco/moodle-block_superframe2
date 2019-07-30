@@ -66,4 +66,15 @@ $capabilities = array(
             'guest' => CAP_ALLOW
         )
     ),
+
+    'block/superframe:viewviewpage' => array(
+        'captype' => 'read',
+        'contextlevel' => CONTEXT_BLOCK,
+        'archetypes' => array(
+            'editingteacher' => CAP_ALLOW,
+            'manager' => CAP_ALLOW,
+            'student' => CAP_ALLOW,
+            'guest' => CAP_PREVENT
+        )
+    )
 );
