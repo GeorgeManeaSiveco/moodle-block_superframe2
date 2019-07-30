@@ -64,3 +64,7 @@ $string['blockid'] = 'Block ID';
 $string['blockname'] = 'Block Name';
 $string['course'] = 'Course shortname';
 $string['catname'] = 'Category';
+
+$string['tablelink'] = 'Table link';
+
+
