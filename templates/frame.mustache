@@ -32,8 +32,10 @@
     <div class="container">
         <div class="jumbotron">
             <h1>{{heading}}</h1>
+            {{> block_superframe/links}}
             <h3>{{user.firstname}} {{user.lastname}}</h3>
             <p><iframe src="{{url}}" height="{{height}}" width="{{width}}"></iframe></p>
+            <p><a href="{{{returnlink}}}">{{returntext}}</a></p>
         </div>
     </div>
 </div>

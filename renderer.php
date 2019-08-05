@@ -28,7 +28,7 @@ defined('MOODLE_INTERNAL') || die();
 class block_superframe_renderer extends plugin_renderer_base
 {
 
-    function display_view_page($url, $width, $height, $user)
+    function display_view_page($url, $width, $height, $user, $courseid, $blockid)
     {
         $data = new stdClass();
 
@@ -38,6 +38,28 @@ class block_superframe_renderer extends plugin_renderer_base
         $data->height = $height;
         $data->width = $width;
         $data->user = $user;
+        $data->class = 'block_superframe_links';
+        $data->returnlink = new moodle_url('/course/view.php', ['id' => $courseid]);
+        $data->returntext = get_string('returncourse', 'block_superframe');
+
+        // Text for the links and the size parameter.
+        $strings = array();
+        $strings[] = get_string('custom', 'block_superframe');
+        $strings[] = get_string('small', 'block_superframe');
+        $strings[] = get_string('medium', 'block_superframe');
+        $strings[] = get_string('large', 'block_superframe');
+
+        // Create the data structure for the links.
+        $links = array();
+        $link = new moodle_url('/blocks/superframe/view.php', ['courseid' => $courseid,
+            'blockid' => $blockid]);
+
+        foreach ($strings as $string) {
+            $links[] = ['link' => $link->out(false, ['size' => $string]),
+                'text' => $string];
+        }
+
+        $data->linkdata = $links;
 
         // Start output to browser.
         echo $this->output->header();
@@ -56,7 +78,7 @@ class block_superframe_renderer extends plugin_renderer_base
 
         // Page heading and iframe data.
         $data->heading = get_string('pluginname', 'block_superframe');
-        $ur = new moodle_url('/blocks/superframe/view.php', ['blockid' => $blockid]);
+        $ur = new moodle_url('/blocks/superframe/view.php', ['blockid' => $blockid, 'courseid' => '']);
         $url = html_writer::link($ur, get_string('viewlink', 'block_superframe'));
         $data->url = $url;
         $data->welcome = get_string('welcomeuser', 'block_superframe', $USER);

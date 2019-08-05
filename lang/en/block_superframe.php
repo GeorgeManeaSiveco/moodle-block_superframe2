@@ -66,5 +66,7 @@ $string['course'] = 'Course shortname';
 $string['catname'] = 'Category';
 
 $string['tablelink'] = 'Table link';
+$string['returncourse'] = 'Return to course';
+$string['userlink'] = 'Installed blocks';
 
 

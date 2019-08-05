@@ -22,7 +22,11 @@
  * @license    http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
 require('../../config.php');
+
 $blockid = required_param('blockid', PARAM_INT);
+$courseid = required_param('courseid', PARAM_INT);
+$size = optional_param('size','none', PARAM_TEXT);
+
 $defconfig = get_config('block_superframe');
 $PAGE->set_course($COURSE);
 $PAGE->set_url('/blocks/superframe/view.php');
@@ -34,29 +38,23 @@ require_login();
 $usercontext = context_user::instance($USER->id);
 require_capability('block/superframe:seeviewpage', $usercontext);
 
-// Start output to browser.
-/*echo $OUTPUT->header();
-echo $OUTPUT->heading(get_string('pluginname', 'block_superframe'), 5);
-echo '<br>' . fullname($USER) . '<br>';*/
-
-// Get the instance configuration data from the database.
-// It's stored as a base 64 encoded serialized string.
 $configdata = $DB->get_field('block_instances', 'configdata', ['id' => $blockid]);
 
-// If an entry exists, convert to an object.
 if ($configdata) {
     $config = unserialize(base64_decode($configdata));
 } else {
-    // No instance data, use admin settings.
-    // However, that only specifies height and width, not size.
     $config = $defconfig;
     $config->size = 'custom';
 }
 
-// URL - comes either from instance or admin.
+if ($size == 'none') {
+    $size = strtolower($config->size);
+}
+
 $url = $config->url;
-// Let's set up the iframe attributes.
-switch ($config->size) {
+
+
+switch (strtolower($size)) {
     case 'custom':
         $width = $defconfig->width;
         $height = $defconfig->height;
@@ -75,14 +73,5 @@ switch ($config->size) {
         break;
 }
 
-/*// Build and display an iframe.
-$attributes = ['src' => $url,
-    'width' => $width,
-    'height' => $height];
-echo html_writer::start_tag('iframe', $attributes);
-echo html_writer::end_tag('iframe');
-
-// Send footer out to browser.
-echo $OUTPUT->footer();*/
 $renderer = $PAGE->get_renderer('block_superframe');
-$renderer->display_view_page($url, $width, $height, $USER);
+$renderer->display_view_page($url, $width, $height, $USER, $courseid, $blockid);

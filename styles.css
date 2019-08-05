@@ -1,0 +1,9 @@
+.block_superframe_links {
+    border: thin grey solid;
+    background: #FDF5E6;
+    margin: 10px;
+}
+.block_superframe_links ul {
+    margin-top: 10px;
+    list-style:none;
+}
